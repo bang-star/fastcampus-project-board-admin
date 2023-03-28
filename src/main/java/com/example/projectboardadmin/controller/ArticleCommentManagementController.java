@@ -19,4 +19,5 @@ public class ArticleCommentManagementController {
     ) {
         return "management/articleComments";
     }
+
 }
