@@ -19,4 +19,5 @@ public class ArticleManagementController {
     ) {
         return "management/articles";
     }
+
 }
