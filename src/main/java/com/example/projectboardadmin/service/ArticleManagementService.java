@@ -1,0 +1,27 @@
+package com.example.projectboardadmin.service;
+
+import com.example.projectboardadmin.dto.ArticleDto;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Slf4j
+@RequiredArgsConstructor
+@Service
+public class ArticleManagementService {
+
+    public List<ArticleDto> getArticles() {
+        return List.of();
+    }
+
+    public ArticleDto getArticle(Long articleId) {
+        return null;
+    }
+
+    public void deleteArticle(Long articleId) {
+
+    }
+
+}
