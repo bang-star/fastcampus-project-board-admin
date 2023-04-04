@@ -31,7 +31,7 @@ class JpaRepositoryTest {
 
     @DisplayName("회원 정보 select 테스트")
     @Test
-    void givenUserAccounts_whenSelecting_thenWorksFine() {
+    void givenAdminAccounts_whenSelecting_thenWorksFine() {
         // Given
 
         // When
@@ -45,7 +45,7 @@ class JpaRepositoryTest {
 
     @DisplayName("회원 정보 insert 테스트")
     @Test
-    void givenUserAccount_whenInserting_thenWorksFine() {
+    void givenAdminAccount_whenInserting_thenWorksFine() {
         // Given
         long previousCount = adminAccountRepository.count();
         AdminAccount adminAccount = AdminAccount.of("test", "pw", Set.of(RoleType.DEVELOPER), null, null, null);
@@ -61,7 +61,7 @@ class JpaRepositoryTest {
     @Test
     void givenUserAccountAndRoleType_whenUpdating_thenWorksFine() {
         // Given
-        AdminAccount adminAccount = adminAccountRepository.getReferenceById("uno");
+        AdminAccount adminAccount = adminAccountRepository.getReferenceById("artist");
         adminAccount.addRoleType(RoleType.DEVELOPER);
         adminAccount.addRoleTypes(List.of(RoleType.USER, RoleType.USER));
         adminAccount.removeRoleType(RoleType.ADMIN);
@@ -71,7 +71,7 @@ class JpaRepositoryTest {
 
         // Then
         assertThat(updatedAccount)
-                .hasFieldOrPropertyWithValue("userId", "uno")
+                .hasFieldOrPropertyWithValue("userId", "artist")
                 .hasFieldOrPropertyWithValue("roleTypes", Set.of(RoleType.DEVELOPER, RoleType.USER));
     }
 
@@ -80,7 +80,7 @@ class JpaRepositoryTest {
     void givenUserAccount_whenDeleting_thenWorksFine() {
         // Given
         long previousCount = adminAccountRepository.count();
-        AdminAccount adminAccount = adminAccountRepository.getReferenceById("uno");
+        AdminAccount adminAccount = adminAccountRepository.getReferenceById("artist");
 
         // When
         adminAccountRepository.delete(adminAccount);
@@ -95,7 +95,7 @@ class JpaRepositoryTest {
     static class TestJpaConfig {
         @Bean
         AuditorAware<String> auditorAware() {
-            return () -> Optional.of("uno");
+            return () -> Optional.of("artist");
         }
     }
 
