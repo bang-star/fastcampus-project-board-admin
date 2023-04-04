@@ -1,7 +1,7 @@
 package com.example.projectboardadmin.dto.security;
 
 import com.example.projectboardadmin.domain.constant.RoleType;
-import com.example.projectboardadmin.dto.UserAccountDto;
+import com.example.projectboardadmin.dto.AdminAccountDto;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public record BoardAdminPrincipal (
+public record BoardAdminPrincipal(
         String username,
         String password,
         Collection<? extends GrantedAuthority> authorities,
@@ -22,14 +22,11 @@ public record BoardAdminPrincipal (
         Map<String, Object> oAuth2Attributes
 ) implements UserDetails, OAuth2User {
 
-    /** OAuth2.0 인증을 안한 경우 */
     public static BoardAdminPrincipal of(String username, String password, Set<RoleType> roleTypes, String email, String nickname, String memo) {
         return BoardAdminPrincipal.of(username, password, roleTypes, email, nickname, memo, Map.of());
     }
 
-    /** OAuth2.0 인증한 경우 */
     public static BoardAdminPrincipal of(String username, String password, Set<RoleType> roleTypes, String email, String nickname, String memo, Map<String, Object> oAuth2Attributes) {
-
         return new BoardAdminPrincipal(
                 username,
                 password,
@@ -45,7 +42,7 @@ public record BoardAdminPrincipal (
         );
     }
 
-    public static BoardAdminPrincipal from(UserAccountDto dto) {
+    public static BoardAdminPrincipal from(AdminAccountDto dto) {
         return BoardAdminPrincipal.of(
                 dto.userId(),
                 dto.userPassword(),
@@ -56,8 +53,8 @@ public record BoardAdminPrincipal (
         );
     }
 
-    public UserAccountDto toDto() {
-        return UserAccountDto.of(
+    public AdminAccountDto toDto() {
+        return AdminAccountDto.of(
                 username,
                 password,
                 authorities.stream()
@@ -81,8 +78,7 @@ public record BoardAdminPrincipal (
     @Override public boolean isCredentialsNonExpired() { return true; }
     @Override public boolean isEnabled() { return true; }
 
-
-    @Override public String getName() { return username; }
     @Override public Map<String, Object> getAttributes() { return oAuth2Attributes; }
+    @Override public String getName() { return username; }
 
 }
